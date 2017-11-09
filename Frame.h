@@ -34,15 +34,11 @@ public:
 	void display();
 	//void eraseAll();
 	void invalidate();
-	void onInitialize();
-	Window * find(int x, int y);
-
+	void onInitialize();  // Make Menu and initialize them
+	Window * find(int x, int y);  // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
+    void registerWindow(Window * w);  // Add new Window to windows pointer array 
 protected:
-	Window * windows[100];  // 나중에는 제대로 된 리스트로 바꿔야한다.
-	int numWidget = 0;
-public:
-    MenuBar* m_menubar;
-	void registerWindow(Window * w);
-
+    Window* first_window;  // Window starting point
+    MenuBar* m_menubar; // MenuBar
 };
 

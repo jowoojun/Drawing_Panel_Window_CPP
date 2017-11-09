@@ -1,8 +1,8 @@
 #include "stdafx.h"
-#include "iostream"
 #include "stdio.h"
 #include "string"
 #include "Window.h"
+#include "Menu.h"
 #include "Frame.h"
 using namespace std;
 
@@ -18,9 +18,7 @@ void Frame::setWnd(HWND hWnd) {
 
 Frame::~Frame(){
 	 // *** 모든 윈도을 delete합니다.
-	for (int i = 0; i < numWidget; i++) {
-		delete windows[i];
-	}
+    delete first_window;
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y){
@@ -118,9 +116,7 @@ void Frame::drawText(std::string str, int x, int y){
 
 // Redraw every window
 void Frame::display(){
-	for (int i = 0; i < numWidget; i++) {
-		windows[i]->display();
-	}
+    first_window->display();
 }
 
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.
@@ -131,24 +127,27 @@ void Frame::invalidate(){
 	InvalidateRect(myWnd, NULL, true);
 }
 
-// Make window and initialize them
+// Make Menu and initialize them
 void Frame::onInitialize(){
-    m_menubar = new MenuBar();  
+    m_menubar = new MenuBar();
+    Menu *fmenu = new Menu("파일");
+    Menu *emenu = new Menu("편집");
+    m_menubar->add(fmenu);
+    m_menubar->add(emenu);
+
 	registerWindow(m_menubar);
-	
+    registerWindow(fmenu);
+    registerWindow(emenu);
 }
 
 // Add new Window to windows pointer array 
 void Frame::registerWindow(Window * w){
-	windows[numWidget++] = w;
+    w->setNext(first_window);
+    first_window = w;
 	w->setFrame(this);
 }
 
 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 Window * Frame::find(int x, int y) {
-	 for (int i = 0; i < this->numWidget; i++) {
-	 if (windows[i]->isInside(x, y))
-	 return windows[i];
-	 }
-	 return (Window *)NULL;
+     return first_window->isInside(x, y);
 }
