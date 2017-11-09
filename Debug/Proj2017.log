@@ -1,1 +1,4 @@
-﻿  Proj2017.vcxproj -> D:\visual_c++_2017\winproj_2017\Debug\Proj2017.exe
+﻿  MenuBar.cpp
+d:\visual_c++_2017\winproj_2017\menubar.cpp(1): warning C4627: '#include <fstream>': 미리 컴파일된 헤더 사용을 찾을 때 건너뛰었습니다.
+  d:\visual_c++_2017\winproj_2017\menubar.cpp(1): note: 'stdafx.h'에 지시문 추가 또는 미리 컴파일된 헤더 다시 빌드
+  Proj2017.vcxproj -> D:\visual_c++_2017\winproj_2017\Debug\Proj2017.exe

@@ -1,11 +1,9 @@
 #include "stdafx.h"
-#include "Frame.h"
-#include "Button.h"
-#include "Label.h"
-#include "stdio.h"
 #include "iostream"
+#include "stdio.h"
 #include "string"
 #include "Window.h"
+#include "Frame.h"
 using namespace std;
 
 Frame::Frame(HWND w):myWnd(w){
@@ -27,11 +25,10 @@ Frame::~Frame(){
 
 void Frame::OnLButtonDown(long wParam, int x, int y){
 	OutputDebugString("Click\n");
-	// 윈도을 찾아서 윈도의 onMouseClick을 실행
-	Window *w = find(x, y);
-	if (w) {
-		w->onMouseClick(x, y);
-	}
+    Window *w = find(x, y);
+    if (w) {
+      w->onMouseClick(x, y);
+    }
 	/* 
 	control key나 shift key등에 따라 다르게 하려면
 	if (wParam & MK_CONTROL)  .. MK_SHIFT 등
@@ -41,6 +38,13 @@ void Frame::OnLButtonDown(long wParam, int x, int y){
 }
 
 void Frame::OnLButtonUp(long wParam, int x, int y){
+    Window *w = find(x, y);
+    if (w) {
+      w->onMouseReleased(x, y);
+    }
+    else {
+      OutputDebugString("Click ");
+    }
 	/*
 	 * 아래는 선 색깔, 채움 색깔을 결정하는 방법을 알려줍니다.
 	setPenColor(RGB(255, 0, 0));
@@ -112,9 +116,8 @@ void Frame::drawText(std::string str, int x, int y){
 	TextOut(hDC, x, y, str.c_str(), strlen(str.c_str()));
 }
 
-// 모든 윈도들을 다시 그려주는 함수.  수정이 필요할 것이다.
+// Redraw every window
 void Frame::display(){
-	// *** 모든 윈도에 대해 display를 실행해줍니다.
 	for (int i = 0; i < numWidget; i++) {
 		windows[i]->display();
 	}
@@ -128,34 +131,24 @@ void Frame::invalidate(){
 	InvalidateRect(myWnd, NULL, true);
 }
 
-// 모든 윈도들을 onInitialize 함수에서 초기화하자.
+// Make window and initialize them
 void Frame::onInitialize(){
-	// *** 모든 윈도들을 여기에서 초기화하자.
-	registerWindow(new Window("apple1",100, 50, 80, 30));
-	registerWindow(new Window("kiwi", 100, 100, 80, 30 ));
-	registerWindow(new Window("banana", 100, 150, 80, 30 ));
-    registerWindow(new Button("Button1", 100, 200, 80, 30));
-    registerWindow(new Label("Label1", 100, 250, 80, 30));
+    m_menubar = new MenuBar();  
+	registerWindow(m_menubar);
+	
 }
 
-
-
+// Add new Window to windows pointer array 
 void Frame::registerWindow(Window * w){
-	 // *** 포인터 배열에 더해주고, 윈도에도 이 Frame 객체의 포인터를 저장해주자.
 	windows[numWidget++] = w;
 	w->setFrame(this);
 }
 
-
+// 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 Window * Frame::find(int x, int y) {
-	 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 	 for (int i = 0; i < this->numWidget; i++) {
 	 if (windows[i]->isInside(x, y))
 	 return windows[i];
 	 }
 	 return (Window *)NULL;
 }
-
-
-
-

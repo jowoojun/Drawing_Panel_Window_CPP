@@ -1,5 +1,6 @@
 #pragma once
 #include "iostream"
+#include "MenuBar.h"
 #include "Window.h"
 class Frame{
 public:
@@ -35,10 +36,12 @@ public:
 	void invalidate();
 	void onInitialize();
 	Window * find(int x, int y);
+
 protected:
 	Window * windows[100];  // 나중에는 제대로 된 리스트로 바꿔야한다.
 	int numWidget = 0;
 public:
+    MenuBar* m_menubar;
 	void registerWindow(Window * w);
 
 };
