@@ -8,8 +8,9 @@ using namespace std;
 #define MENU_HEIGHT 30
 
 // Initialize variables
-MenuBar::MenuBar() : Window(0, 0, MENU_WIDTH * 5, MENU_HEIGHT) {
-
+MenuBar::MenuBar(Frame* f) : Window(0, 0, MENU_WIDTH * 5, MENU_HEIGHT) {
+  this->m_frame = f;
+  m_frame->registerWindow(this);
 }
 
 // When mouse is released, it makes string output
@@ -33,4 +34,19 @@ void MenuBar::add(Menu *m) {
   m_menu_x += MENU_WIDTH;
   m->setWidth(MENU_WIDTH);
   m->setHeight(MENU_HEIGHT);
+
+  m_frame->registerWindow(m);
+  m->setFrame(m_frame);
+}
+
+void MenuBar::display() {
+  m_frame->setPen(RGB(100, 100, 100), 1);
+  m_frame->rectangle(m_x, m_y, m_xsize, m_ysize);
+  drawContent();
+
+  first_menu->display();
+}
+
+Menu* MenuBar::find(int x, int y) {
+  return first_menu->isInside(x, y);
 }

@@ -32,7 +32,6 @@ void Frame::OnLButtonDown(long wParam, int x, int y){
 	if (wParam & MK_CONTROL)  .. MK_SHIFT 등
 
 	*/
-	// 위 코드는 테스트용이고, Frame 객체의 OnLButtonDown 함수를 호출해
 }
 
 void Frame::OnLButtonUp(long wParam, int x, int y){
@@ -71,9 +70,7 @@ void Frame::OnChar(long ch){
 	drawText(s, 100, 100);
 	*/
 	OutputDebugString("Key 입력.\n");
-
 }
-
 
 void Frame::setPenColor(COLORREF color){
 	thePen = CreatePen(PS_SOLID, 1, color);
@@ -90,11 +87,9 @@ void Frame::setFillColor(COLORREF color){
 	SelectObject(hDC, theBrush);
 }
 
-
 void Frame::setTextColor(COLORREF color){
 	SetTextColor(hDC, color);
 }
-
 
 void Frame::rectangle(int x, int y, int sizeX, int sizeY){
 	Rectangle(hDC, x, y, x + sizeX, y + sizeY);
@@ -116,7 +111,8 @@ void Frame::drawText(std::string str, int x, int y){
 
 // Redraw every window
 void Frame::display(){
-    first_window->display();
+    m_menubar->display();
+    //canverse->display();
 }
 
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.
@@ -129,25 +125,31 @@ void Frame::invalidate(){
 
 // Make Menu and initialize them
 void Frame::onInitialize(){
-    m_menubar = new MenuBar();
+    m_menubar = new MenuBar(this);
     Menu *fmenu = new Menu("파일");
     Menu *emenu = new Menu("편집");
     m_menubar->add(fmenu);
     m_menubar->add(emenu);
-
-	registerWindow(m_menubar);
-    registerWindow(fmenu);
-    registerWindow(emenu);
 }
 
 // Add new Window to windows pointer array 
 void Frame::registerWindow(Window * w){
     w->setNext(first_window);
     first_window = w;
-	w->setFrame(this);
 }
 
 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 Window * Frame::find(int x, int y) {
-     return first_window->isInside(x, y);
+  if (m_menubar->isInside(x, y)) {
+    Window* temp = m_menubar->find(x, y);
+    if (temp) {
+      return temp;
+    }
+    else {
+      return m_menubar;
+    }
+  }
+  else {
+    return 0;//return canverse;
+  }
 }

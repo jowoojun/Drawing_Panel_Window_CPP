@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Frame.h"
 #include "Menu.h"
 using namespace std;
 
@@ -42,4 +43,25 @@ void Menu::setX(int x) {
 // set m_ysize in Window
 void Menu::setHeight(int height) {
   this->m_ysize = height;
+}
+
+void Menu::display() {
+  if (m_next_menu) {
+    m_next_menu->display();
+  }
+  m_frame->setPen(RGB(100, 100, 100), 1);
+  m_frame->rectangle(m_x, m_y, m_xsize, m_ysize);
+  drawContent();
+}
+
+Menu* Menu::isInside(int x, int y) {
+  if (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize) {
+    return this;
+  }
+  else if (m_next_menu) {
+    return m_next_menu->isInside(x, y);
+  }
+  else {
+    return (Menu*)0;
+  }
 }

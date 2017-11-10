@@ -10,7 +10,7 @@ public:
     ~Window();  // remove Window until m_next is null
 	void setFrame(Frame *);  // Set m_frame to parameter
 	void drawContent();  // Draw text content(text)
-	Window* isInside(int x, int y);  // Whether there is click point (x,y) in this window or not. If it's in there, return this. If not, find m_next
+	bool isInside(int x, int y);  // Whether there is click point (x,y) in this window or not. If it's in there, return this. If not, find m_next
     virtual void display();  // Draw Window frame(Rectangle)
     virtual void onMouseClick(int x, int y);  // When mouse is pressed, it makes string output.
     virtual void onMouseReleased(int x, int y) = 0;  // When mouse is released, it makes string output

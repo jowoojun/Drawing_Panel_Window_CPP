@@ -6,11 +6,13 @@
 class Menu;
 class MenuBar : public Window {
 public:
-  MenuBar();  // Initialize variables
+  MenuBar(Frame* f);  // Initialize variables
   virtual void onMouseReleased(int x, int y);  // When mouse is released, it makes string output
   virtual void onMouseClick(int x, int y);  // When mouse is pressed, it makes string output.
+  virtual void display();
+  Menu* find(int x, int y);
   void add(Menu *);  // add new menu item and set position
-private:
+protected:
   Menu *first_menu;  // Menu starting point
   int m_menu_x = 0; // Menu's x point
 };

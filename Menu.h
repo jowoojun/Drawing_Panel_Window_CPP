@@ -9,6 +9,8 @@ public :
   Menu(std::string s);  // Initialize variables
   virtual void onMouseReleased(int x, int y);  // When mouse is released, it makes string output
   virtual void onMouseClick(int x, int y);  // When mouse is pressed, it makes string output.
+  virtual void display();
+  virtual Menu* isInside(int x, int y);
   void setMenuBar(MenuBar *); // set MenuBar
   void setNextMenu(Menu *); // set next Menu
   void setWidth(int);  // set m_xsize in Window
