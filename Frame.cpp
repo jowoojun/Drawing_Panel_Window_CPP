@@ -130,6 +130,7 @@ void Frame::onInitialize(){
     Menu *emenu = new Menu("ÆíÁı");
     m_menubar->add(fmenu);
     m_menubar->add(emenu);
+    m_canvas = new Canvas(this);
 }
 
 // Add new Window to windows pointer array 
@@ -150,6 +151,6 @@ Window * Frame::find(int x, int y) {
     }
   }
   else {
-    return 0;//return canverse;
+    return m_canvas;//return canverse;
   }
 }

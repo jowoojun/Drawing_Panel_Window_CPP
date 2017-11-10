@@ -1,7 +1,9 @@
 #pragma once
 #include "iostream"
 #include "MenuBar.h"
+#include "Canvas.h"
 #include "Window.h"
+
 class Frame{
 public:
 	Frame(HWND);
@@ -40,5 +42,6 @@ public:
 protected:
     Window* first_window;  // Window starting point
     MenuBar* m_menubar; // MenuBar
+    Canvas* m_canvas;
 };
 

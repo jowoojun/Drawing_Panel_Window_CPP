@@ -2,6 +2,9 @@
 #include <string>
 using namespace std;
 
+#define MENU_WIDTH 200
+#define MENU_HEIGHT 30
+
 class Frame;
 class Window {
 public:

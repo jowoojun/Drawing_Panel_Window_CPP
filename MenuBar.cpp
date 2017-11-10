@@ -4,11 +4,10 @@
 #include "MenuBar.h"
 using namespace std;
 
-#define MENU_WIDTH 200
-#define MENU_HEIGHT 30
+
 
 // Initialize variables
-MenuBar::MenuBar(Frame* f) : Window(0, 0, MENU_WIDTH * 5, MENU_HEIGHT) {
+MenuBar::MenuBar(Frame* f) : Window(0, 0, MENU_WIDTH * 10, MENU_HEIGHT) {
   this->m_frame = f;
   m_frame->registerWindow(this);
 }
