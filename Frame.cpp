@@ -18,7 +18,8 @@ void Frame::setWnd(HWND hWnd) {
 
 Frame::~Frame(){
 	 // *** 모든 윈도을 delete합니다.
-    delete first_window;
+    delete m_menubar;
+    delete m_canvas;
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y){
@@ -112,7 +113,7 @@ void Frame::drawText(std::string str, int x, int y){
 // Redraw every window
 void Frame::display(){
     m_menubar->display();
-    //canverse->display();
+    m_canvas->display();
 }
 
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.
@@ -125,18 +126,12 @@ void Frame::invalidate(){
 
 // Make Menu and initialize them
 void Frame::onInitialize(){
-    m_menubar = new MenuBar(this);
+    m_menubar = new MenuBar(this);    
     Menu *fmenu = new Menu("파일");
     Menu *emenu = new Menu("편집");
     m_menubar->add(fmenu);
     m_menubar->add(emenu);
     m_canvas = new Canvas(this);
-}
-
-// Add new Window to windows pointer array 
-void Frame::registerWindow(Window * w){
-    w->setNext(first_window);
-    first_window = w;
 }
 
 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.

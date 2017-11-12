@@ -38,9 +38,7 @@ public:
 	void invalidate();
 	void onInitialize();  // Make Menu and initialize them
 	Window * find(int x, int y);  // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
-    void registerWindow(Window * w);  // Add new Window to windows pointer array 
 protected:
-    Window* first_window;  // Window starting point
     MenuBar* m_menubar; // MenuBar
     Canvas* m_canvas;
 };
