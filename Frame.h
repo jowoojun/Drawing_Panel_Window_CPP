@@ -1,10 +1,11 @@
 #pragma once
 #include "iostream"
-#include "MenuBar.h"
-#include "Canvas.h"
-#include "Window.h"
+#include"container.h"
+using namespace std;
 
-class Frame{
+class MenuBar;
+class Canvas;
+class Frame : public Container{
 public:
 	Frame(HWND);
 	~Frame();
@@ -40,6 +41,6 @@ public:
 	Window * find(int x, int y);  // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 protected:
     MenuBar* m_menubar; // MenuBar
-    Canvas* m_canvas;
+    Canvas* m_canvas; // Canvas
 };
 

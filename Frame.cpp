@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "stdio.h"
 #include "string"
-#include "Window.h"
 #include "Menu.h"
+#include "MenuBar.h"
+#include "Canvas.h"
 #include "Frame.h"
+
 using namespace std;
 
 Frame::Frame(HWND w):myWnd(w){
@@ -112,8 +114,7 @@ void Frame::drawText(std::string str, int x, int y){
 
 // Redraw every window
 void Frame::display(){
-    m_menubar->display();
-    m_canvas->display();
+    m_menubar->display(this);
 }
 
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.
@@ -126,7 +127,7 @@ void Frame::invalidate(){
 
 // Make Menu and initialize them
 void Frame::onInitialize(){
-    m_menubar = new MenuBar(this);    
+    m_menubar = new MenuBar();    
     Menu *fmenu = new Menu("파일");
     Menu *emenu = new Menu("편집");
     m_menubar->add(fmenu);
@@ -146,6 +147,6 @@ Window * Frame::find(int x, int y) {
     }
   }
   else {
-    return m_canvas;//return canverse;
+    return m_canvas;  
   }
 }

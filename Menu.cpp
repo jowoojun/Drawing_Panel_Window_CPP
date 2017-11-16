@@ -1,23 +1,18 @@
 #include "stdafx.h"
 #include "Frame.h"
+#include "MenuBar.h"
 #include "Menu.h"
 using namespace std;
 
 // Initialize variables
-Menu::Menu(std::string s) :Window(s, 0, 0, 0, 0){
+Menu::Menu(std::string s) :Container(s, 0, 0, 0, 0){
 
 }
 
-// When mouse is released, it makes string output
-void Menu::onMouseReleased(int x, int y) {
-  m_menu_bar->onMouseReleased(x, y);
-  OutputDebugString(m_text.c_str());
-  OutputDebugString(" Clicked.\n");
-}
-
-// When mouse is pressed, it makes string output.
-void Menu::onMouseClick(int x, int y) {
-  
+// delete menu that is inputed before
+Menu::~Menu() {
+  if (m_next_menu)
+    delete m_next_menu;
 }
 
 // set MenuBar
@@ -45,13 +40,14 @@ void Menu::setHeight(int height) {
   this->m_ysize = height;
 }
 
-void Menu::display() {
+// draw Menu
+void Menu::display(Frame *f) {
   if (m_next_menu) {
-    m_next_menu->display();
+    m_next_menu->display(f);
   }
-  m_frame->setPen(RGB(100, 100, 100), 1);
-  m_frame->rectangle(m_x, m_y, m_xsize, m_ysize);
-  drawContent();
+  f->setPen(RGB(100, 100, 100), 1);
+  f->rectangle(m_x, m_y, m_xsize, m_ysize);
+  drawContent(f);
 }
 
 Menu* Menu::isInside(int x, int y) {
@@ -64,4 +60,16 @@ Menu* Menu::isInside(int x, int y) {
   else {
     return (Menu*)0;
   }
+}
+
+// When mouse is released, it makes string output
+void Menu::onMouseReleased(int x, int y) {
+  m_menu_bar->onMouseReleased(x, y);
+  OutputDebugString(m_text.c_str());
+  OutputDebugString(" Clicked.\n");
+}
+
+// When mouse is pressed, it makes string output.
+void Menu::onMouseClick(int x, int y) {
+
 }
