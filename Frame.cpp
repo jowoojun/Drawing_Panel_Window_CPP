@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "string"
 #include "Menu.h"
+#include "MenuItem.h"
 #include "MenuBar.h"
 #include "Canvas.h"
 #include "Frame.h"
@@ -10,7 +11,7 @@ using namespace std;
 
 Frame::Frame(HWND w):myWnd(w){
 	hDC = ::GetDC(w);
-
+    
 	onInitialize();
 }
 
@@ -21,30 +22,29 @@ void Frame::setWnd(HWND hWnd) {
 Frame::~Frame(){
 	 // *** 모든 윈도을 delete합니다.
     delete m_menubar;
-    delete m_canvas;
+    signed int num = winList->size();
+    for (signed int i = 0; i < num; i++){
+      Window* temp = winList->back();
+      winList->pop_back();
+      delete temp;
+    }
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y){
-	OutputDebugString("Click\n");
+    OutputDebugString("Click\n");
     Window *w = find(x, y);
     if (w) {
+      m_menubar->setAllUnclicked();
       w->onMouseClick(x, y);
     }
-	/* 
+    invalidate();
+    /*
 	control key나 shift key등에 따라 다르게 하려면
 	if (wParam & MK_CONTROL)  .. MK_SHIFT 등
-
 	*/
 }
 
 void Frame::OnLButtonUp(long wParam, int x, int y){
-    Window *w = find(x, y);
-    if (w) {
-      w->onMouseReleased(x, y);
-    }
-    else {
-      OutputDebugString("Click ");
-    }
 	/*
 	 * 아래는 선 색깔, 채움 색깔을 결정하는 방법을 알려줍니다.
 	setPenColor(RGB(255, 0, 0));
@@ -115,6 +115,10 @@ void Frame::drawText(std::string str, int x, int y){
 // Redraw every window
 void Frame::display(){
     m_menubar->display(this);
+    Menu* temp = m_menubar->getAnyTrueMenu();
+    if (temp) {
+      temp->drawMenuItem(this);
+    }
 }
 
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.
@@ -133,17 +137,27 @@ void Frame::onInitialize(){
     m_menubar->add(fmenu);
     m_menubar->add(emenu);
     m_canvas = new Canvas(this);
+    fmenu->add(new MenuItem("저장"));
+    fmenu->add(new MenuItem("열기"));
+    fmenu->add(new MenuItem("끝"));
+    emenu->add(new MenuItem("복사"));
+    emenu->add(new MenuItem("자르기"));
+    emenu->add(new MenuItem("붙이기"));
 }
 
 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 Window * Frame::find(int x, int y) {
+  Menu* temp;
+  MenuItem* ttemp;
   if (m_menubar->isInside(x, y)) {
-    Window* temp = m_menubar->find(x, y);
-    if (temp) {
-      return temp;
+    return m_menubar;
+  }
+  else if ((temp = (m_menubar->getAnyTrueMenu()))) {
+    if ((ttemp = (temp->find(x, y)))) {
+      return ttemp;
     }
     else {
-      return m_menubar;
+      return m_canvas;
     }
   }
   else {

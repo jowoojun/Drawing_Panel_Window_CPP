@@ -172,6 +172,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		case WM_DESTROY:
+            delete mainFrame;
 			PostQuitMessage(0);
 			break;
 		case WM_LBUTTONDOWN:

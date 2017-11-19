@@ -3,6 +3,7 @@
 #include"container.h"
 using namespace std;
 
+class MenuItem;
 class MenuBar;
 class Canvas;
 class Frame : public Container{
@@ -14,8 +15,6 @@ protected:
 	HDC hDC;
 	HBRUSH brushWhite, brushBlack;
 	HPEN penWhite, penBlack;
-	// 임시 변수
-	int count = 0;
 	HPEN thePen;
 	HBRUSH theBrush;
 public:
@@ -29,13 +28,11 @@ public:
 	void setPen(COLORREF color, int width);   // 펜 색깔과 두께까지 설정.
 	void setFillColor(COLORREF color);
 	void setTextColor(COLORREF color);
-
 	void rectangle(int x, int y, int sizeX, int sizeY);
 	void ellipse(int x, int y, int sizeX, int sizeY);
 	void line(int x, int y, int sizeX, int sizeY);
 	void drawText(std::string str, int x, int y);
 	void display();
-	//void eraseAll();
 	void invalidate();
 	void onInitialize();  // Make Menu and initialize them
 	Window * find(int x, int y);  // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
