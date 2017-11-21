@@ -18,3 +18,9 @@ Window::Window(int x, int y, int sx, int sy) :
 Window::Window(string s, int x, int y, int sx, int sy) :
   m_text(s), m_x(x), m_y(y), m_xsize(sx), m_ysize(sy) {
 }
+
+// Whether there is click point (x,y) in this Menu or not
+// If it's in there, return true. If not, return false
+bool Window::isInside(int x, int y) {
+  return (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize);
+}

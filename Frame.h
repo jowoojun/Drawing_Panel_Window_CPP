@@ -33,9 +33,9 @@ public:
 	void line(int x, int y, int sizeX, int sizeY);
 	void drawText(std::string str, int x, int y);
 	void display();
-	void invalidate();
+	void invalidate();  // erase all Window and redisplay Window
 	void onInitialize();  // Make Menu and initialize them
-	Window * find(int x, int y);  // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
+    virtual Window * find(int x, int y);  // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.
 protected:
     MenuBar* m_menubar; // MenuBar
     Canvas* m_canvas; // Canvas

@@ -8,6 +8,7 @@ public:
     Window();  // Initialize variables
 	Window(int x, int y, int sx, int sy);  // Initialize variables
     Window(string s, int x, int y, int sx, int sy);  // Initialize variables
+    bool isInside(int x, int y); // Whether there is click point (x,y) in this Window or not. If it's in there, return true. If not, return false
     virtual void onMouseClick(int x, int y) = 0;  // When mouse is pressed, it makes string output.
 protected:
     int m_x, m_y;  // starting point

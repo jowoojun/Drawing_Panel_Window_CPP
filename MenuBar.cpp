@@ -24,11 +24,9 @@ MenuBar::~MenuBar() {
 // add new menu item and set position
 void MenuBar::add(Menu *m) {
   Container::add(m);
-
-  m->setX(m_menu_x);
+  
+  m->setSize(m_menu_x, 0, MENU_WIDTH, MENU_HEIGHT);
   m_menu_x += MENU_WIDTH;
-  m->setWidth(MENU_WIDTH);
-  m->setHeight(MENU_HEIGHT);
 }
 
 // draw MenuBar and Menus
@@ -43,12 +41,7 @@ void MenuBar::display(Frame *f) {
   }
 }
 
-// Whether there is click point (x,y) in this window or not
-// If it's in there, return true. If not, return false
-bool MenuBar::isInside(int x, int y) {
-  return (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize);
-}
-
+// set All menu's m_menuClicked to be false
 void MenuBar::setAllUnclicked() {
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
@@ -56,6 +49,7 @@ void MenuBar::setAllUnclicked() {
   }
 }
 
+// find that menu's m_menuClicked is true
 Menu* MenuBar::getAnyTrueMenu() {
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
@@ -66,15 +60,15 @@ Menu* MenuBar::getAnyTrueMenu() {
   return (Menu *)0;
 }
 
-MenuItem* MenuBar::find(int x, int y) {
+// find to be clicked menu
+Window* MenuBar::find(int x, int y) {
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
-    MenuItem* temp = ((Menu *)*i)->find(x, y);
-    if (temp) {
-      return temp;
+    if (((Menu *)*i)->find(x, y)) {
+      return (*i);
     }
   }
-  return (MenuItem *)0;
+  return (Window *)0;
 }
 
 // When mouse is pressed, it makes string output.
@@ -82,7 +76,7 @@ void MenuBar::onMouseClick(int x, int y) {
   OutputDebugString("MenuBar Clicked. ");
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
-    if (((Menu *)*i)->isInside(x, y)) {
+    if ((*i)->isInside(x, y)) {
       ((Menu *)*i)->onMouseClick(x, y);
     }
   }

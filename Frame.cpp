@@ -149,11 +149,11 @@ void Frame::onInitialize(){
 Window * Frame::find(int x, int y) {
   Menu* temp;
   MenuItem* ttemp;
-  if (m_menubar->isInside(x, y)) {
+  if (((Window*)m_menubar)->isInside(x, y)) {
     return m_menubar;
   }
   else if ((temp = (m_menubar->getAnyTrueMenu()))) {
-    if ((ttemp = (temp->find(x, y)))) {
+    if ((ttemp = (MenuItem *)(temp->find(x, y)))) {
       return ttemp;
     }
     else {

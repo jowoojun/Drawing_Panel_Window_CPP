@@ -4,19 +4,22 @@
 #include "Menu.h"
 #include"container.h"
 
+// Initialize variables
 Container::Container():Window() {
   winList = new list<Window *>;
 }
 
+// Initialize variables
 Container::Container(int x, int y, int sx, int sy) :
   Window(x, y, sx, sy){
 }
 
+// Initialize variables
 Container::Container(string s, int x, int y, int sx, int sy): 
   Window(s, x, y, sx, sy) {
 }
 
-// set next Window
+// add Window to winList
 void Container::add(Window* w) {
   winList->push_back(w);
 }

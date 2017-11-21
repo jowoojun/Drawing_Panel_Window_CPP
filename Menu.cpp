@@ -9,8 +9,8 @@ using namespace std;
 // Initialize variables
 Menu::Menu(std::string s) :Container(s, 0, 0, 0, 0){
   winList = new list<Window *>;
-  m_menu_Y = ITEMHEIGHT;
   m_menuClicked = false;
+  m_menu_Y = ITEMHEIGHT;
 }
 
 // delete menu that is inputed before
@@ -23,19 +23,12 @@ Menu::~Menu() {
   }
 }
 
-// set m_xsize in Window
-void Menu::setWidth(int width) {
-  this->m_xsize = width;
-}
-
-// set m_x in Window
-void Menu::setX(int x) {
-  this->m_x = x;
-}
-
-// set m_ysize in Window
-void Menu::setHeight(int height) {
-  this->m_ysize = height;
+// set size of Menu
+void Menu::setSize(int x, int y, int xsize, int ysize) {
+  m_x = x;
+  m_y = y;
+  m_xsize = xsize;
+  m_ysize = ysize;
 }
 
 // draw Menu
@@ -45,10 +38,7 @@ void Menu::display(Frame *f) {
   f->drawText(m_text, m_x + 5, m_y + 5);
 }
 
-bool Menu::isInside(int x, int y) {
-  return (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize);
-}
-
+// draw MenuItems
 void Menu::drawMenuItem(Frame *f) {
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
@@ -56,18 +46,20 @@ void Menu::drawMenuItem(Frame *f) {
   }
 }
 
+// add new MenuItem in winList and set position
 void Menu::add(MenuItem *mi) {
-  mi->setX(m_x + 20);
-  mi->setY(m_menu_Y);
-  m_menu_Y += ITEMHEIGHT;
-
   Container::add(mi);
+ 
+  mi->setSize(m_x, m_menu_Y);
+  m_menu_Y += ITEMHEIGHT;
 }
 
+// set this Menu's m_menuClicked to be false
 void Menu::setUnclicked() {
   m_menuClicked = false;
 }
 
+// if m_menuClicked is true, return this, if not return (Menu*) 0
 Menu* Menu::getTrueMenu() {
   if (m_menuClicked == true) {
     return this;
@@ -77,12 +69,12 @@ Menu* Menu::getTrueMenu() {
   }
 }
 
-MenuItem* Menu::find(int x, int y) {
+// find to be clicked MenuItem
+Window* Menu::find(int x, int y) {
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
-    MenuItem* temp = ((MenuItem*)*i)->isInside(x, y);
-    if (temp) {
-      return temp;
+    if ((*i)->isInside(x, y)) {
+      return (*i);
     }
   }
   return (MenuItem *)0;

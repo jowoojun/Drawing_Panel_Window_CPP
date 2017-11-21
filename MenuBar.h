@@ -9,12 +9,11 @@ class MenuBar : public Container {
 public:
   MenuBar();  // Initialize variables
   ~MenuBar();  // delete Menus
-  void add(Menu *);  // add new menu item and set position
+  void add(Menu *);  // add new menu in winList and set position
   void display(Frame *f);  // draw MenuBar and Menus
-  bool isInside(int x, int y);  // Whether there is click point (x,y) in this window or not. If it's in there, return this. If not, find m_next
-  void setAllUnclicked();
-  Menu* getAnyTrueMenu();
-  MenuItem* find(int x, int y);
+  void setAllUnclicked();  // set All menu's m_menuClicked to be false
+  Menu* getAnyTrueMenu();  // find that menu's m_menuClicked is true
+  virtual Window* find(int x, int y); // find to be clicked Menu
   virtual void onMouseClick(int x, int y);  // When mouse is pressed, it makes string output.
 protected:
   int m_menu_x; // Menu's x point
