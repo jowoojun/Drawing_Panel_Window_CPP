@@ -40,7 +40,7 @@ void Menu::drawMenuItem() {
 void Menu::add(MenuItem *mi) {
   Container::add(mi);
  
-  m_frame->add(this);
+  m_frame->add(mi);
   mi->setFrame(this->m_frame);
   mi->setSize(m_x, m_menu_Y);
   m_menu_Y += ITEMHEIGHT;

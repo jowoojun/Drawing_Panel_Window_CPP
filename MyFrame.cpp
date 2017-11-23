@@ -10,7 +10,6 @@ MyFrame::MyFrame(HWND hDc):Frame(hDc) {
   
 }
 
-
 // Make Menu and initialize them
 void MyFrame::onInitialize() {
   addMenuBar(new MenuBar());

@@ -44,10 +44,7 @@ void Frame::OnLButtonDown(long wParam, int x, int y){
 }
 
 void Frame::OnLButtonUp(long wParam, int x, int y){
-    Window *w = find(x, y);
-    if (w == m_canvas) {
-      w->onMouseReleased(x, y);
-    }
+    m_canvas->onMouseReleased(x, y);
 	/*
 	 * 아래는 선 색깔, 채움 색깔을 결정하는 방법을 알려줍니다.
 	setPenColor(RGB(255, 0, 0));

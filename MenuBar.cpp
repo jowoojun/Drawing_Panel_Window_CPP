@@ -15,7 +15,7 @@ MenuBar::MenuBar() : Container(0, 0, MENU_WIDTH * 10, MENU_HEIGHT) {
 void MenuBar::add(Menu *m) {
   Container::add(m);
   
-  m_frame->add(this);
+  m_frame->add(m);
   m->setContainer(this);
   m->setFrame(this->m_frame);
   m->setSize(m_menu_x, 0, MENU_WIDTH, MENU_HEIGHT);
