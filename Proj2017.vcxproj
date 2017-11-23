@@ -87,7 +87,9 @@
     <ClInclude Include="MenuBar.h" />
     <ClInclude Include="MenuItem.h" />
     <ClInclude Include="MyFrame.h" />
+    <ClInclude Include="Rect.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Controller.h" />
@@ -101,6 +103,8 @@
     <ClCompile Include="MenuBar.cpp" />
     <ClCompile Include="MenuItem.cpp" />
     <ClCompile Include="MyFrame.cpp" />
+    <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Shape.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

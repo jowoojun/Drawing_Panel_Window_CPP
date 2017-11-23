@@ -119,6 +119,7 @@ void Frame::display(){
     if (temp) {
       temp->drawMenuItem();
     }
+    m_canvas->display();
 }
 
 // 화면이 현재 제대로 안되어 있다고 알리는 함수입니다.

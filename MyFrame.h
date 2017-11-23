@@ -4,6 +4,7 @@
 #include"Frame.h"
 using namespace std;
 
+class Shape;
 class Menu;
 class MenuItem;
 class MyFrame :public Frame {
