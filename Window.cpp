@@ -24,3 +24,27 @@ Window::Window(string s, int x, int y, int sx, int sy) :
 bool Window::isInside(int x, int y) {
   return (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize);
 }
+
+void Window::setContainer(Container * con)
+{
+  m_container = con;
+}
+
+void Window::setSize(int sx, int sy)
+{
+  m_xsize = sx;
+  m_ysize = sy;
+}
+
+
+void Window::setFrame(Frame *f) {
+  m_frame = f;
+}
+
+string Window::getTitle() {
+  return m_text;
+}
+
+void Window::onMouseReleased(int x, int y) {
+
+}

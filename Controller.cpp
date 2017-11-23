@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Controller.h"
 #include "Frame.h"   // 조세형
+#include "MyFrame.h"
 
 #define MAX_LOADSTRING 100
 
@@ -111,7 +112,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
-   mainFrame = new Frame(g_hWnd);  // 조세형
+   mainFrame = new MyFrame(g_hWnd);  // 조세형
+   mainFrame->onInitialize();
 
    ShowWindow(g_hWnd, nCmdShow);
    UpdateWindow(g_hWnd);

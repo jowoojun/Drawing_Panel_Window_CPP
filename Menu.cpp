@@ -13,16 +13,6 @@ Menu::Menu(std::string s) :Container(s, 0, 0, 0, 0){
   m_menu_Y = ITEMHEIGHT;
 }
 
-// delete menu that is inputed before
-Menu::~Menu() {
-  signed int num = winList->size();
-  for (signed int i = 0; i < num; i++) {
-    Window* temp = winList->back();
-    winList->pop_back();
-    delete temp;
-  }
-}
-
 // set size of Menu
 void Menu::setSize(int x, int y, int xsize, int ysize) {
   m_x = x;
@@ -32,17 +22,17 @@ void Menu::setSize(int x, int y, int xsize, int ysize) {
 }
 
 // draw Menu
-void Menu::display(Frame *f) {
-  f->setPen(RGB(100, 100, 100), 1);
-  f->rectangle(m_x, m_y, m_xsize, m_ysize);
-  f->drawText(m_text, m_x + 5, m_y + 5);
+void Menu::display() {
+  m_frame->setPen(RGB(100, 100, 100), 1);
+  m_frame->rectangle(m_x, m_y, m_xsize, m_ysize);
+  m_frame->drawText(m_text, m_x + 5, m_y + 5);
 }
 
 // draw MenuItems
-void Menu::drawMenuItem(Frame *f) {
+void Menu::drawMenuItem() {
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
-    ((MenuItem *)*i)->display(f);
+    ((MenuItem *)*i)->display();
   }
 }
 
@@ -50,6 +40,8 @@ void Menu::drawMenuItem(Frame *f) {
 void Menu::add(MenuItem *mi) {
   Container::add(mi);
  
+  m_frame->add(this);
+  mi->setFrame(this->m_frame);
   mi->setSize(m_x, m_menu_Y);
   m_menu_Y += ITEMHEIGHT;
 }

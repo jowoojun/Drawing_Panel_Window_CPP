@@ -10,10 +10,9 @@ class MenuBar;
 class Menu : public Container {
 public :
   Menu(std::string s);  // Initialize variables
-  ~Menu();  // delete menu that is inputed before
   void setSize(int x, int y, int xsize, int ysize); // set size of Menu
-  void display(Frame *f);  // draw Menu
-  void drawMenuItem(Frame *f); // draw MenuItems
+  void display();  // draw Menu
+  void drawMenuItem(); // draw MenuItems
   void add(MenuItem *mi);  // add new MenuItem in winList and set position
   void setUnclicked();  // set this Menu's m_menuClicked to be false
   Menu* getTrueMenu();  // if m_menuClicked is true, return this, if not return (Menu*) 0

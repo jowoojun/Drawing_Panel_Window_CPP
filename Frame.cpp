@@ -12,7 +12,7 @@ using namespace std;
 Frame::Frame(HWND w):myWnd(w){
 	hDC = ::GetDC(w);
     
-	onInitialize();
+    setContainer(this);
 }
 
 void Frame::setWnd(HWND hWnd) {
@@ -21,7 +21,6 @@ void Frame::setWnd(HWND hWnd) {
 
 Frame::~Frame(){
 	 // *** 모든 윈도을 delete합니다.
-    delete m_menubar;
     signed int num = winList->size();
     for (signed int i = 0; i < num; i++){
       Window* temp = winList->back();
@@ -45,6 +44,10 @@ void Frame::OnLButtonDown(long wParam, int x, int y){
 }
 
 void Frame::OnLButtonUp(long wParam, int x, int y){
+    Window *w = find(x, y);
+    if (w == m_canvas) {
+      w->onMouseReleased(x, y);
+    }
 	/*
 	 * 아래는 선 색깔, 채움 색깔을 결정하는 방법을 알려줍니다.
 	setPenColor(RGB(255, 0, 0));
@@ -114,10 +117,10 @@ void Frame::drawText(std::string str, int x, int y){
 
 // Redraw every window
 void Frame::display(){
-    m_menubar->display(this);
+    m_menubar->display();
     Menu* temp = m_menubar->getAnyTrueMenu();
     if (temp) {
-      temp->drawMenuItem(this);
+      temp->drawMenuItem();
     }
 }
 
@@ -131,18 +134,37 @@ void Frame::invalidate(){
 
 // Make Menu and initialize them
 void Frame::onInitialize(){
-    m_menubar = new MenuBar();    
+    addMenuBar(new MenuBar());
+    addCanvas(new Canvas());
+
     Menu *fmenu = new Menu("파일");
     Menu *emenu = new Menu("편집");
     m_menubar->add(fmenu);
     m_menubar->add(emenu);
-    m_canvas = new Canvas(this);
+    
     fmenu->add(new MenuItem("저장"));
     fmenu->add(new MenuItem("열기"));
     fmenu->add(new MenuItem("끝"));
     emenu->add(new MenuItem("복사"));
     emenu->add(new MenuItem("자르기"));
     emenu->add(new MenuItem("붙이기"));
+}
+
+void Frame::addMenuBar(MenuBar* mb) {
+  if (!mb) return;
+  add(mb);
+  mb->setContainer(this);
+  mb->setFrame(this);
+  Window::setSize(600, 30);
+  m_menubar = mb;
+}
+
+void Frame::addCanvas(Canvas * c) {
+  if (!c) return;
+  add(c);
+  c->setContainer(this);
+  c->setFrame(this);
+  m_canvas = c;
 }
 
 // 각 윈도에게 isInside(x, y) 를 물어서 클릭된 객체의 포인터를 돌려주자.

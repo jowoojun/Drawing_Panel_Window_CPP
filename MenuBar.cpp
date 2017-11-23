@@ -11,33 +11,26 @@ MenuBar::MenuBar() : Container(0, 0, MENU_WIDTH * 10, MENU_HEIGHT) {
   winList = new list<Window *>;
 }
 
-// delete Menus
-MenuBar::~MenuBar() {
-  signed int num = winList->size();
-  for (signed int i = 0; i < num; i++) {
-    Window* temp = winList->back();
-    winList->pop_back();
-    delete temp;
-  }
-}
-
 // add new menu item and set position
 void MenuBar::add(Menu *m) {
   Container::add(m);
   
+  m_frame->add(this);
+  m->setContainer(this);
+  m->setFrame(this->m_frame);
   m->setSize(m_menu_x, 0, MENU_WIDTH, MENU_HEIGHT);
   m_menu_x += MENU_WIDTH;
 }
 
 // draw MenuBar and Menus
-void MenuBar::display(Frame *f) {
-  f->setPen(RGB(100, 100, 100), 1);
-  f->rectangle(m_x, m_y, m_xsize, m_ysize);
-  f->drawText(m_text, m_x + 5, m_y + 5);
+void MenuBar::display() {
+  m_frame->setPen(RGB(100, 100, 100), 1);
+  m_frame->rectangle(m_x, m_y, m_xsize, m_ysize);
+  m_frame->drawText(m_text, m_x + 5, m_y + 5);
 
   list<Window *>::iterator i;
   for (i = winList->begin(); i != winList->end(); i++) {
-    ((Menu *)*i)->display(f);
+    ((Menu *)*i)->display();
   }
 }
 
