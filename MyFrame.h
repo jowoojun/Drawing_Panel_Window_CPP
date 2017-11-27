@@ -14,5 +14,5 @@ public:
   void processEvent(Window* src);  // check Event
 private:
   Menu *fmenu, *emenu;  // Menus
-  MenuItem *miRect, *miEllip, *miLine, *miBlack, *miRed, *miBlue; // MenuItems
+  MenuItem *miMove, *miRect, *miEllip, *miLine, *miBlack, *miRed, *miBlue; // MenuItems
 };

@@ -25,26 +25,30 @@ bool Window::isInside(int x, int y) {
   return (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize);
 }
 
+// set container that they are contained
 void Window::setContainer(Container * con)
 {
   m_container = con;
 }
 
+// set Window Size
 void Window::setSize(int sx, int sy)
 {
   m_xsize = sx;
   m_ysize = sy;
 }
 
-
+// set Frame
 void Window::setFrame(Frame *f) {
   m_frame = f;
 }
 
+// get m_text
 string Window::getTitle() {
   return m_text;
 }
 
+// When mouse is released
 void Window::onMouseReleased(int x, int y) {
 
 }

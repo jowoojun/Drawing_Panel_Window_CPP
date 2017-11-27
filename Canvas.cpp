@@ -41,12 +41,38 @@ void Canvas::setColor(COLORREF color) {
   m_color = color;
 }
 
+// if you click the shape when you press the CTRL key, the clicked shape is removed.
+void Canvas::deleteShape(int x, int y) {
+  Shape* temp = (Shape*) 0;
+  list<Shape *>::reverse_iterator i;
+  for (i = shapeList->rbegin(); i != shapeList->rend(); i++) {
+    if (((Shape *)*i)->isinside(x, y)) {
+      temp = (*i);
+      break;
+    }
+  }
+  if (temp) {
+    shapeList->remove(temp);
+    delete temp;
+  }
+  else {
+    return ;
+  }
+}
+
+// find Shape at clicked point
+Shape* Canvas::find(int x, int y) {
+  list<Shape *>::reverse_iterator i;
+  for (i = shapeList->rbegin(); i != shapeList->rend(); i++) {
+    if (((Shape *)*i)->isinside(x, y)) {
+      return (*i);
+    }
+  }
+  return (Shape*)0;
+}
+
 // When mouse is pressed, store starting point
 void Canvas::onMouseClick(int x, int y) {
-  OutputDebugString("Canvas: ");
-  OutputDebugString(to_string(x).c_str());
-  OutputDebugString(", ");
-  OutputDebugString(to_string(y - MENU_HEIGHT).c_str());
   pointX = x;
   pointY = y;
   clicked = true;
@@ -55,29 +81,37 @@ void Canvas::onMouseClick(int x, int y) {
 // When mouse is pressed, store ending point and make instance.
 void Canvas::onMouseReleased(int x, int y) {
   if (clicked == true) {
-    OutputDebugString(" --> ");
-    OutputDebugString(to_string(x).c_str());
-    OutputDebugString(", ");
-    OutputDebugString(to_string(y - MENU_HEIGHT).c_str());
-    OutputDebugString("\n");
     releaseX = x - pointX;
     releaseY = y - pointY;
 
     Shape* m_shape = (Shape*)0;
     switch (m_shapeType) {
-    case 0:
-      m_shape = new CRectangle(pointX, pointY, releaseX, releaseY);
-      break;
-    case 1:
-      m_shape = new CEllipse(pointX, pointY, releaseX, releaseY);
-      break;
-    case 2:
-      m_shape = new CLine(pointX, pointY, releaseX, releaseY);
-      break;
+      case 0:
+        m_shape = new CRectangle(pointX, pointY, releaseX, releaseY);
+        add(m_shape);
+        break;
+      case 1:
+        m_shape = new CEllipse(pointX, pointY, releaseX, releaseY);
+        add(m_shape);
+        break;
+      case 2:
+        m_shape = new CLine(pointX, pointY, releaseX, releaseY);
+        add(m_shape);
+        break;
+      case 3:
+        moveto();
+        break;
     }
 
-    add(m_shape);
     m_frame->invalidate();
     clicked = false;
+  }
+}
+
+// move shape
+void Canvas::moveto() {
+  Shape *temp;
+  if (temp = (find(pointX, pointY))) {
+    temp->moveto(releaseX, releaseY);
   }
 }

@@ -22,6 +22,7 @@ void MyFrame::onInitialize() {
   fmenu->add(miRect = new MenuItem("사각형"));
   fmenu->add(miEllip = new MenuItem("타원"));
   fmenu->add(miLine = new MenuItem("선분"));
+  fmenu->add(miMove = new MenuItem("이동"));
 
   emenu->add(miBlack = new MenuItem("검은색"));
   emenu->add(miRed = new MenuItem("빨간색"));
@@ -31,7 +32,10 @@ void MyFrame::onInitialize() {
 // check Event
 void MyFrame::processEvent(Window * src) {
   OutputDebugString("MenuItem ");
-  if (src == miRect) {
+  if (src == miMove) {
+    m_canvas->setShapeType(3);
+  }
+  else if (src == miRect) {
     m_canvas->setShapeType(0);
   }
   else if (src == miEllip) {

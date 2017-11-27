@@ -30,12 +30,18 @@ Frame::~Frame(){
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y){
-    OutputDebugString("Click\n");
-    Window *w = find(x, y);
-    if (w) {
-      m_menubar->setAllUnclicked();
-      w->onMouseClick(x, y);
+    if (wParam & MK_CONTROL) {
+      m_canvas->deleteShape(x, y);
     }
+    else {
+      OutputDebugString("Click\n");
+      Window *w = find(x, y);
+      if (w) {
+        m_menubar->setAllUnclicked();
+        w->onMouseClick(x, y);
+      }
+    }
+
     invalidate();
     /*
 	control key나 shift key등에 따라 다르게 하려면
@@ -114,8 +120,8 @@ void Frame::drawText(std::string str, int x, int y){
 
 // Redraw every window
 void Frame::display(){
-    m_menubar->display();
     m_canvas->display();
+    m_menubar->display();
     Menu* temp = m_menubar->getAnyTrueMenu();
     if (temp) {
       temp->drawMenuItem();
