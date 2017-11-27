@@ -5,7 +5,7 @@
 #include "Canvas.h"
 #include "MyFrame.h"
 
-
+// initalize variables
 MyFrame::MyFrame(HWND hDc):Frame(hDc) {
   
 }
@@ -15,39 +15,39 @@ void MyFrame::onInitialize() {
   addMenuBar(new MenuBar());
   addCanvas(new Canvas());
 
-  m_menubar->add(fmenu = new Menu("파일"));
-  m_menubar->add(emenu = new Menu("편집"));
+  m_menubar->add(fmenu = new Menu("도형"));
+  m_menubar->add(emenu = new Menu("색"));
 
 
-  fmenu->add(miOpen = new MenuItem("열기"));
-  fmenu->add(miSave = new MenuItem("저장"));
-  fmenu->add(miExit = new MenuItem("끝내기"));
+  fmenu->add(miRect = new MenuItem("사각형"));
+  fmenu->add(miEllip = new MenuItem("타원"));
+  fmenu->add(miLine = new MenuItem("선분"));
 
-  emenu->add(miCopy = new MenuItem("복사"));
-  emenu->add(miCut = new MenuItem("자르기"));
-  emenu->add(miPaste = new MenuItem("붙이기"));
+  emenu->add(miBlack = new MenuItem("검은색"));
+  emenu->add(miRed = new MenuItem("빨간색"));
+  emenu->add(miBlue = new MenuItem("파란색"));
 }
 
+// check Event
 void MyFrame::processEvent(Window * src) {
   OutputDebugString("MenuItem ");
-  if (src == miOpen) {
-    OutputDebugString("무엇을 열까요?");
+  if (src == miRect) {
+    m_canvas->setShapeType(0);
   }
-  else if (src == miSave) {
-    OutputDebugString("저장할까요??");
+  else if (src == miEllip) {
+    m_canvas->setShapeType(1);
   }
-  else if (src == miExit) {
-    OutputDebugString("종료!");
-    exit(1);
+  else if (src == miLine) {
+    m_canvas->setShapeType(2);
   }
-  else if (src == miCopy) {
-    OutputDebugString("복사합니다.");
+  else if (src == miBlack) {
+    m_canvas->setColor(RGB(0, 0, 0));
   }
-  else if (src == miCut) {
-    OutputDebugString("어떤 도형을 자를까요?");
+  else if (src == miRed) {
+    m_canvas->setColor(RGB(255, 0, 0));
   }
-  else if (src == miPaste) {
-    OutputDebugString("붙여넣습니다!");
+  else if (src == miBlue) {
+    m_canvas->setColor(RGB(0, 0, 255));
   }
   OutputDebugString(" Clicked.\n");
 }
