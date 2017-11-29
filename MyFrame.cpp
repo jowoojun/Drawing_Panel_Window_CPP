@@ -15,18 +15,19 @@ void MyFrame::onInitialize() {
   addMenuBar(new MenuBar());
   addCanvas(new Canvas());
 
-  m_menubar->add(fmenu = new Menu("도형"));
-  m_menubar->add(emenu = new Menu("색"));
+  m_menubar->add(smenu = new Menu("도형"));
+  m_menubar->add(cmenu = new Menu("색"));
 
 
-  fmenu->add(miRect = new MenuItem("사각형"));
-  fmenu->add(miEllip = new MenuItem("타원"));
-  fmenu->add(miLine = new MenuItem("선분"));
-  fmenu->add(miMove = new MenuItem("이동"));
+  smenu->add(miRect = new MenuItem("사각형"));
+  smenu->add(miEllip = new MenuItem("타원"));
+  smenu->add(miLine = new MenuItem("선분"));
+  smenu->add(miMove = new MenuItem("이동"));
 
-  emenu->add(miBlack = new MenuItem("검은색"));
-  emenu->add(miRed = new MenuItem("빨간색"));
-  emenu->add(miBlue = new MenuItem("파란색"));
+  cmenu->add(miBlack = new MenuItem("검은색"));
+  cmenu->add(miRed = new MenuItem("빨간색"));
+  cmenu->add(miBlue = new MenuItem("파란색"));
+  cmenu->add(miGreen = new MenuItem("초록색"));
 }
 
 // check Event
@@ -52,6 +53,9 @@ void MyFrame::processEvent(Window * src) {
   }
   else if (src == miBlue) {
     m_canvas->setColor(RGB(0, 0, 255));
+  }
+  else if (src == miGreen) {
+    m_canvas->setColor(RGB(0, 255, 0));
   }
   OutputDebugString(" Clicked.\n");
 }

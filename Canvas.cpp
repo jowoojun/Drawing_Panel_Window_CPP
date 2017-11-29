@@ -46,7 +46,7 @@ void Canvas::deleteShape(int x, int y) {
   Shape* temp = (Shape*) 0;
   list<Shape *>::reverse_iterator i;
   for (i = shapeList->rbegin(); i != shapeList->rend(); i++) {
-    if (((Shape *)*i)->isinside(x, y)) {
+    if (((Shape *)*i)->isInside(x, y)) {
       temp = (*i);
       break;
     }
@@ -57,14 +57,13 @@ void Canvas::deleteShape(int x, int y) {
   }
   else {
     return ;
-  }
-}
+  }}
 
 // find Shape at clicked point
 Shape* Canvas::find(int x, int y) {
   list<Shape *>::reverse_iterator i;
   for (i = shapeList->rbegin(); i != shapeList->rend(); i++) {
-    if (((Shape *)*i)->isinside(x, y)) {
+    if (((Shape *)*i)->isInside(x, y)) {
       return (*i);
     }
   }
@@ -73,45 +72,40 @@ Shape* Canvas::find(int x, int y) {
 
 // When mouse is pressed, store starting point
 void Canvas::onMouseClick(int x, int y) {
-  pointX = x;
-  pointY = y;
+  m_startX = x;
+  m_startY = y;
   clicked = true;
 }
 
 // When mouse is pressed, store ending point and make instance.
 void Canvas::onMouseReleased(int x, int y) {
   if (clicked == true) {
-    releaseX = x - pointX;
-    releaseY = y - pointY;
+    m_width = x - m_startX;
+    m_height = y - m_startY;
 
     Shape* m_shape = (Shape*)0;
     switch (m_shapeType) {
       case 0:
-        m_shape = new CRectangle(pointX, pointY, releaseX, releaseY);
+        m_shape = new CRectangle(m_startX, m_startY, m_width, m_height);
         add(m_shape);
         break;
       case 1:
-        m_shape = new CEllipse(pointX, pointY, releaseX, releaseY);
+        m_shape = new CEllipse(m_startX, m_startY, m_width, m_height);
         add(m_shape);
         break;
       case 2:
-        m_shape = new CLine(pointX, pointY, releaseX, releaseY);
+        m_shape = new CLine(m_startX, m_startY, m_width, m_height);
         add(m_shape);
         break;
       case 3:
-        moveto();
+        Shape *temp;
+        if (temp = (find(m_startX, m_startY))) {
+          temp->moveto(m_width, m_height);
+        }
         break;
     }
 
     m_frame->invalidate();
     clicked = false;
-  }
-}
-
-// move shape
-void Canvas::moveto() {
-  Shape *temp;
-  if (temp = (find(pointX, pointY))) {
-    temp->moveto(releaseX, releaseY);
   }
 }

@@ -10,9 +10,9 @@ class MenuItem;
 class MyFrame :public Frame {
 public:
   MyFrame(HWND);  // initalize variables
-  void onInitialize();  // Make Menu and initialize them
-  void processEvent(Window* src);  // check Event
+  virtual void onInitialize();  // Make Menu and initialize them
+  virtual void processEvent(Window* src);  // check Event
 private:
-  Menu *fmenu, *emenu;  // Menus
-  MenuItem *miMove, *miRect, *miEllip, *miLine, *miBlack, *miRed, *miBlue; // MenuItems
+  Menu *smenu, *cmenu;  // Menus
+  MenuItem *miRect, *miEllip, *miLine, *miMove, *miBlack, *miRed, *miBlue, *miGreen; // MenuItems
 };

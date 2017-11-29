@@ -30,19 +30,21 @@ Frame::~Frame(){
 }
 
 void Frame::OnLButtonDown(long wParam, int x, int y){
+    Window *w = (Window *)0;
     if (wParam & MK_CONTROL) {
       m_canvas->deleteShape(x, y);
     }
     else {
       OutputDebugString("Click\n");
-      Window *w = find(x, y);
+      w = find(x, y);
       if (w) {
         m_menubar->setAllUnclicked();
         w->onMouseClick(x, y);
       }
     }
-
-    invalidate();
+    if (w != m_canvas) {
+      invalidate();
+    }
     /*
 	control key나 shift key등에 따라 다르게 하려면
 	if (wParam & MK_CONTROL)  .. MK_SHIFT 등
@@ -51,6 +53,7 @@ void Frame::OnLButtonDown(long wParam, int x, int y){
 
 void Frame::OnLButtonUp(long wParam, int x, int y){
     m_canvas->onMouseReleased(x, y);
+    invalidate();
 	/*
 	 * 아래는 선 색깔, 채움 색깔을 결정하는 방법을 알려줍니다.
 	setPenColor(RGB(255, 0, 0));

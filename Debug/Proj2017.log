@@ -1,11 +1,12 @@
-﻿  Shape.cpp
-  Canvas.cpp
+﻿  Canvas.cpp
 d:\visual_c++_2017\winproj2017\canvas.cpp(1): warning C4627: '#include <fstream>': 미리 컴파일된 헤더 사용을 찾을 때 건너뛰었습니다.
   d:\visual_c++_2017\winproj2017\canvas.cpp(1): note: 'stdafx.h'에 지시문 추가 또는 미리 컴파일된 헤더 다시 빌드
   코드를 생성하고 있습니다...
-  컴파일하고 있습니다...
+  건너뛰고 있습니다... (관련된 변경 내용 없음)
+  Shape.cpp
+  MyFrame.cpp
+  Frame.cpp
   CRectangle.cpp
   CLine.cpp
   CEllipse.cpp
-  코드를 생성하고 있습니다...
   Proj2017.vcxproj -> D:\visual_c++_2017\winproj2017\Debug\Proj2017.exe

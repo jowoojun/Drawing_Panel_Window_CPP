@@ -14,12 +14,11 @@ public :
   void setShapeType(int type); // set shape of Shape
   void setColor(COLORREF color); // set color of Shape
   void deleteShape(int x, int y);  // if you click the shape when you press the CTRL key, the clicked shape is removed.
-  void moveto();  // move shape
   Shape* find(int x, int y);  // find Shape at clicked point
   virtual void onMouseClick(int x, int y);  // When mouse is pressed, it makes string output.
   virtual void onMouseReleased(int x, int y);  // When mouse is released, store ending point and make instance.
 private:
-  int pointX, pointY, releaseX, releaseY; // string point, ending point
+  int m_startX, m_startY, m_width, m_height; // string point, ending point
   bool clicked = false;  // check whether shape is drawn
   list<Shape *>* shapeList; // shape's list
   int m_shapeType;  // shape of Shape

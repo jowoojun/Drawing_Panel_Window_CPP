@@ -5,14 +5,10 @@
 #include <fstream>
 
 // initalize variables
-Shape::Shape(int x, int y, int sx, int sy) :m_x(x),  m_y(y), m_xsize(sx), m_ysize(sy){
-
+Shape::Shape(int x, int y, int w, int h) :m_startX(x),  m_startY(y), m_width(w), m_height(h){
+  
 }
 
-// remove Shape
-Shape::~Shape() {
-
-}
 // set Frame
 void Shape::setFrame(Frame *f) {
   m_frame = f;
@@ -23,12 +19,13 @@ void Shape::setColor(COLORREF color) {
   m_color = color;
 }
 
-bool Shape::isinside(int x, int y) {
-  return (m_x <= x && x < m_x + m_xsize && m_y <= y && y < m_y + m_ysize);
+// move shape
+void Shape::moveto(int w, int h) {
+  m_startX += w;
+  m_startY += h;
 }
 
-// move shape
-void Shape::moveto(int sx, int sy) {
-  m_x += sx;
-  m_y += sy;
+// Whether there is click point (x,y) in this Window or not. If it's in there, return true. If not, return false
+bool Shape::isInside(int x, int y) {
+  return (m_startX <= x && x < m_startX + m_width && m_startY <= y && y < m_startY + m_height);
 }
